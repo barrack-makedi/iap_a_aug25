@@ -1,11 +1,150 @@
 <?php
-class Layouts {
-    public function header($conf){
-        echo "<header><h1>" . $conf['site_name'] . "</h1></header>";
-    }
+class layouts {
+    public function header($conf) {
+?>
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Lawlink - Advocacy Management System">
+      <meta name="author" content="Lawlink Development Team">
+      <meta name="generator" content="Astro v5.13.2">
+      <title><?php echo $conf['site_name']; ?> | Home</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-    public function footer($conf){
-        echo "<footer><p>Copyright &copy; - ". $conf['site_name'] . " " . date("Y") . "</p></footer>";
+      <!-- Theme color for mobile browsers -->
+      <meta name="theme-color" content="#013220">
+
+      <!-- Custom styles -->
+      <style>
+         body {
+            font-family: 'Nyala', serif;
+            background-color: #f5f5dc; /* beige */
+            color: #88938fff; /* dark green */
+         }
+         .navbar, footer {
+            background-color:  #f5f5dc;
+            color: #ffffff;
+         }
+         .navbar .nav-link, .navbar-brand {
+            color: #ffffff !important;
+         }
+         .btn-primary, .btn-outline-light {
+            background-color: #8b9793ff;
+            border-color: #013220;
+            color: #ffffff;
+         }
+         .btn-primary:hover, .btn-outline-light:hover {
+            background-color: #2e4d32;
+            border-color: #2e4d32;
+         }
+         .bg-body-tertiary {
+            background-color: #ffffff !important;
+            color: #323001ad;
+         }
+      </style>
+   </head>
+   <body>
+<?php
+    }
+    public function navbar($conf) {
+    ?>
+      <main>
+         <div class="container py-4">
+            <header class="pb-3 mb-4 border-bottom">
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Lawlink navbar">
+            <div class="container-fluid">
+               <a class="navbar-brand" href="./"><?php echo $conf['site_name']; ?></a>
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+               </button> 
+               <div class="collapse navbar-collapse" id="navbarsExample05">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     <li class="nav-item">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>" href="./">Home</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'signup.php') ? 'active' : ''; ?>" href="signup.php">Register</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'signin.php') ? 'active' : ''; ?>" href="signin.php">Login</a>
+                     </li>
+                  </ul>
+                  <form role="search">
+                     <input class="form-control" type="search" placeholder="Search cases or clients..." aria-label="Search">
+                  </form>
+               </div>
+            </div>
+         </nav>
+            </header>
+    <?php
+    }
+    public function banner($conf) {
+    ?>
+            <div class="p-1 mb-4 bg-body-tertiary rounded-3">
+               <div class="container-fluid py-1">
+                  <h1 class="display-5 fw-bold">Welcome to <?php echo $conf['site_name']; ?></h1>
+                  <p class="col-md-8 fs-4">Your all-in-one platform for managing advocacy, clients, and legal workflows.</p>
+                  <a href="signup.php" class="btn btn-primary btn-lg">Get Started</a>
+               </div>
+            </div>
+    <?php
+    }
+    public function content($conf) {
+    ?>
+            <div class="row align-items-md-stretch">
+               <div class="col-md-6">
+                  <div class="h-100 p-5 text-bg-dark rounded-3">
+                     <h2>Case & Client Management</h2>
+                     <p>Organize, track, and streamline your client records, case files, and court dates seamlessly with <?php echo $conf['site_name']; ?>.</p>
+                     <a href="signup.php" class="btn btn-outline-light">Start Managing</a>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                     <h2>Billing & Scheduling</h2>
+                     <p>Keep track of appointments, deadlines, and invoices with built-in scheduling and billing features.</p>
+                     <a href="signup.php" class="btn btn-outline-secondary">Learn More</a>
+                  </div>
+               </div>
+            </div>
+    <?php
+    }
+    public function form_frame($conf, $ObjForm, $ObjFncs) {
+    ?>
+            <div class="row align-items-md-stretch">
+               <div class="col-md-6">
+                  <div class="h-100 p-5 text-bg-dark rounded-3">
+<?php 
+if(basename($_SERVER['PHP_SELF']) == 'signup.php'){
+    $ObjForm->signup($conf, $ObjFncs);
+}else{
+    $ObjForm->signin($conf, $ObjFncs);
+} 
+?>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                     <h2>Why <?php echo $conf['site_name']; ?>?</h2>
+                     <p>Designed for advocates, law firms, and legal professionals who want efficiency and better client relations.</p>
+                     <button class="btn btn-outline-secondary" type="button">Discover Features</button> 
+                  </div>
+               </div>
+            </div>
+    <?php
+    }
+    public function footer($conf) {
+?>
+            <footer class="pt-3 mt-4 text-body-secondary border-top">
+               &copy; <?php echo date("Y"); ?> <?php print $conf['site_name']; ?> - All rights reserved.
+            </footer>
+         </div>
+      </main>
+<script src="<?php echo $conf['site_url']; ?>/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+   </body>
+</html>
+<?php
     }
 }
-
